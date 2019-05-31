@@ -3,6 +3,7 @@ import json
 from collections import defaultdict
 import random
 import numpy as np
+import time
 
 def select(filename, k=3):
     samples = []
@@ -20,6 +21,7 @@ def select(filename, k=3):
             f.readline()
             line = f.readline().strip()
             line = line.decode("utf-8").strip()
+
             if line:
                 line_dict = ast.literal_eval(line)
                 dialogue = line_dict["dialogue"]
@@ -28,6 +30,8 @@ def select(filename, k=3):
                 samples.append(dialogue[j]["text"])
                 i += 1
                 cnt -= 1
+            else:
+                print("--")
 
     assert len(samples) == k, "sample sizes are different"
 
@@ -51,8 +55,10 @@ def convert_to_json(filename):
 
             all_dialogs.append(dialog)
 
-    def random_select_conversation(true_conversation):
-        random_selected = select(filename)
+    def random_select_conversation(all_dialogs, true_conversation):
+        #random_selected = select(filename)
+        random_selected = np.random.choice(all_dialogs, 19)
+        random_selected = [np.random.choice(list(dialog), 1)[0] for dialog in random_selected]
         return random_selected + [true_conversation]
 
     dataset = defaultdict(list)
@@ -61,27 +67,26 @@ def convert_to_json(filename):
     # k = 0
     for dialog in all_dialogs:
         utterances = []
-        # t1 = time.time()
+        t1 = time.time()
         for i in range(0, len(dialog), 2):
             utterance = defaultdict(list)
             utterance["history"] = dialog[:i + 1]
             true_conversation = dialog[i + 1]
-            utterance["candidates"] = random_select_conversation(true_conversation)
+            utterance["candidates"] = random_select_conversation(all_dialogs, true_conversation)
             utterances.append(utterance)
 
         if utterances:
             dataset["train"].append({"personality": [], "utterances": utterances})
 
-            # k+=1
-            # if k>1000:
-            #     break
-            # t2 = time.time()
+        t2 = time.time()
+
+        print(t2-t1)
 
     return dataset
 
 
 if __name__ == "__main__":
-    filename = "/media/rohola/data/dialog_systems/daily_dialog/test.json"
+    filename = "/media/rohola/data/dialog_systems/daily_dialog/train.json"
     dataset = convert_to_json(filename)
 
     with open('test.json', 'w') as fp:
