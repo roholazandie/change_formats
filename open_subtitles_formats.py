@@ -70,7 +70,7 @@ if __name__ == "__main__":
     filename = "/media/data/rohola_data/opensubtitles/test.txt"
 
     dataset = convert_to_json(filename)
-    with open('test_out.json', 'w') as fp:
+    with open('/media/data/rohola_data/opensubtitles/test_out.json', 'w') as fp:
         json.dump(dataset, fp)
     t2 = time.time()
     print(t2-t1)
