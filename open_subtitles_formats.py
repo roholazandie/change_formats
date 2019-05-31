@@ -5,12 +5,12 @@ import numpy as np
 import time
 from random_sampler import select
 
-with open("/media/rohola/data/dialog_systems/persona_chat/personachat_self_original.json") as f:
-    result = json.load(f)
-
-print(result["train"][0]["personality"])
-print(result["train"][0]["utterances"][3]["candidates"])
-print(result["train"][0]["utterances"][3]["history"])
+# with open("/media/rohola/data/dialog_systems/persona_chat/personachat_self_original.json") as f:
+#     result = json.load(f)
+#
+# print(result["train"][0]["personality"])
+# print(result["train"][0]["utterances"][3]["candidates"])
+# print(result["train"][0]["utterances"][3]["history"])
 
 
 
