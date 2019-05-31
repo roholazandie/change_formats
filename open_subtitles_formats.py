@@ -14,9 +14,6 @@ print(result["train"][0]["utterances"][3]["history"])
 
 
 
-
-
-
 def convert_to_json(filename):
     with open(filename) as file_reader:
         all_dialogs = []
@@ -70,10 +67,10 @@ def convert_to_json(filename):
 if __name__ == "__main__":
     t1 = time.time()
     #filename = "/media/rohola/data/dialog_systems/opensubtitle/train.txt"
-    filename = "/home/rohola/test.txt"
+    filename = "/media/data/rohola_data/opensubtitles/test.txt"
 
     dataset = convert_to_json(filename)
-    with open('test.json', 'w') as fp:
+    with open('test_out.json', 'w') as fp:
         json.dump(dataset, fp)
     t2 = time.time()
     print(t2-t1)

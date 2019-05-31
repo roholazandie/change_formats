@@ -86,8 +86,8 @@ def convert_to_json(filename):
 
 
 if __name__ == "__main__":
-    filename = "/media/rohola/data/dialog_systems/daily_dialog/train.json"
+    filename = "/media/data/rohola_data/daily_dialog/test.json"
     dataset = convert_to_json(filename)
 
-    with open('test.json', 'w') as fp:
+    with open('/media/data/rohola_data/daily_dialog/test_out.json', 'w') as fp:
         json.dump(dataset, fp)

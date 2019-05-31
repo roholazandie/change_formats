@@ -22,7 +22,7 @@ def select(filename, k=10):
             parts = rest.split('\t')
             samples.append(parts[0])
 
-
+    assert len(samples)==k, "sample size is not correct"
 
     return samples
 
