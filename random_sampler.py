@@ -18,6 +18,7 @@ def select(filename, k=10):
                 number, rest = line.split(" ", 1)
             except:
                 samples.append("This is a test.")
+                continue
 
             parts = rest.split('\t')
             samples.append(parts[0])

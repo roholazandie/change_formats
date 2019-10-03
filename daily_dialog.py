@@ -85,9 +85,47 @@ def convert_to_json(filename):
     return dataset
 
 
-if __name__ == "__main__":
-    filename = "/media/data/rohola_data/daily_dialog/test.json"
-    dataset = convert_to_json(filename)
+def merge_dicts():
 
-    with open('/media/data/rohola_data/daily_dialog/test_out.json', 'w') as fp:
-        json.dump(dataset, fp)
+
+    with open("/home/rohola/data/test_out.json") as file_reader:
+        test_dict = json.load(file_reader)
+
+    test_dict["valid"] = test_dict["train"]
+    del test_dict["train"]
+    with open("/home/rohola/data/valid_out.json") as file_reader:
+        valid_dict = json.load(file_reader)
+
+    test_dict["valid"].extend(valid_dict["train"])
+
+    with open("/home/rohola/data/train_out.json") as file_reader:
+        train_dict = json.load(file_reader)
+
+    dataset_dict = {**train_dict, **test_dict}
+
+    with open("/home/rohola/data/daily_dialog.json", 'w') as file_writer:
+        json.dump(dataset_dict, file_writer)
+
+
+def find_longest():
+    with open("/home/rohola/data/daily_dialog.json") as fr:
+        dataset = json.load(fr)
+
+
+    for item in dataset["train"]:
+        for ut in item["utterances"]:
+            for his in ut["history"]:
+                if len(his.split()) > 300:
+                    print(his)
+
+
+
+if __name__ == "__main__":
+    filename = "/media/rohola/data/dialog_systems/daily_dialog/test.json"
+    dataset = convert_to_json(filename)
+    #
+    # with open('/media/data/rohola_data/daily_dialog/test_out.json', 'w') as fp:
+    #     json.dump(dataset, fp)
+
+    #merge_dicts()
+    #find_longest()

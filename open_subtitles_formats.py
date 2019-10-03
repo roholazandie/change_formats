@@ -66,11 +66,11 @@ def convert_to_json(filename):
 
 if __name__ == "__main__":
     t1 = time.time()
-    #filename = "/media/rohola/data/dialog_systems/opensubtitle/train.txt"
-    filename = "/media/data/rohola_data/opensubtitles/test.txt"
+    filename = "/media/rohola/data/dialog_systems/opensubtitle/test.txt"
+    #filename = "/media/data/rohola_data/opensubtitles/test.txt"
 
     dataset = convert_to_json(filename)
-    with open('/media/data/rohola_data/opensubtitles/test_out.json', 'w') as fp:
+    with open('test.json', 'w') as fp:
         json.dump(dataset, fp)
     t2 = time.time()
     print(t2-t1)
