@@ -104,7 +104,7 @@ def change_format(conversation_filename, reading_set_filename):
         all_dialog_fun_facts.append(dialog_fun_facts)
 
     all_dialog_embeds = []
-    for dialogs in all_dialogs:
+    for dialogs in tqdm(all_dialogs):
         dialog_embed = []
         for message in dialogs:
             doc = nlp(message)
@@ -112,7 +112,7 @@ def change_format(conversation_filename, reading_set_filename):
         all_dialog_embeds.append(dialog_embed)
 
     all_fun_facts_embed = []
-    for fun_facts in all_dialog_fun_facts:
+    for fun_facts in tqdm(all_dialog_fun_facts):
         fun_facts_embed = []
         for facts in fun_facts:
             if facts:
@@ -172,15 +172,21 @@ def change_format(conversation_filename, reading_set_filename):
 if __name__ == "__main__":
     conversation_filename = "/media/rohola/data/dialog_systems/alexa_prize_topical_chat_dataset/conversations/train.json"
     reading_set_filename = "/media/rohola/data/dialog_systems/alexa_prize_topical_chat_dataset/reading_sets/train.json"
-    # read_conversations(conversation_filename, reading_set_filename)
+    # # read_conversations(conversation_filename, reading_set_filename)
     dataset = change_format(conversation_filename, reading_set_filename)
+    # pickle.dump(dataset, open("dataset.p", "wb"))
 
-    with open('/media/rohola/data/dialog_systems/alexa_prize_topical_chat_dataset/out/sample.json', 'w') as fp:
-        json.dump(dataset, fp)
+    # train_dict = pickle.load(
+    #     open("/media/data2/rohola_data/datasets/alexa_prize_topical_chat_dataset/out/train_dataset_bert.p", 'rb'))
+    # valid_dict = pickle.load(
+    #     open("/media/data2/rohola_data/datasets/alexa_prize_topical_chat_dataset/out/valid_dataset_bert.p", 'rb'))
+    # dataset_dict = {**train_dict, **valid_dict}
+    # pickle.dump(dataset_dict,
+    #             open("/media/data2/rohola_data/datasets/alexa_prize_topical_chat_dataset/out/dataset_bert", "wb"))
 
-    # pickle.dump(dataset, open("dataset5.p", "wb"))
-
-    # with open('/media/rohola/data/dialog_systems/alexa_prize_topical_chat_dataset/out/sample.json') as fr:
-    #   dataset = json.load(fr)
-
-    # dataset = pickle.load(open("dataset5.p", "rb"))
+    # dataset = pickle.load(open("/media/data2/rohola_data/datasets/alexa_prize_topical_chat_dataset/out/dataset_bert", "wb"))
+    #
+    # small_train_data = dataset['train'][:30]
+    # small_valid_data = dataset['valid'][:10]
+    # small_dataset_dict = {"train": small_train_data, "valid": small_valid_data}
+    # pickle.dump(small_dataset_dict, open("/media/data2/rohola_data/datasets/alexa_prize_topical_chat_dataset/out/small_dataset_bert", "wb"))
